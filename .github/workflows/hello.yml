@@ -41,7 +41,10 @@ jobs:
     runs-on: ${{ needs.start-runner.outputs.label }}
     steps:
       - name: Hello World
-        run: echo 'Hello World!'
+        run: |
+          echo 'Hello World!'
+          uname -a
+          cat /etc/os-release
 
   stop-runner:
     name: Stop self-hosted EC2 runner
