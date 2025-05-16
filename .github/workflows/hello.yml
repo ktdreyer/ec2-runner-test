@@ -36,7 +36,6 @@ jobs:
             ]
           block-device-mappings: >
             [{"DeviceName": "/dev/sda1", "Ebs": {
-               "VolumeSize": 100,
                "Throughput": 300,
                "VolumeType": "gp3"}
              }]
