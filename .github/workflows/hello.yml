@@ -45,6 +45,7 @@ jobs:
           echo 'Hello World!'
           uname -a
           cat /etc/os-release
+          df -h
 
   stop-runner:
     name: Stop self-hosted EC2 runner
