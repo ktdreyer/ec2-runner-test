@@ -34,6 +34,11 @@ jobs:
               {"Key": "Name", "Value": "kdreyer-test-ec2-github-runner"},
               {"Key": "GitHubRepository", "Value": "${{ github.repository }}"}
             ]
+          block-device-mappings: >
+            [{"DeviceName": "/dev/sda1", "Ebs": {
+               "Throughput": 300,
+               "VolumeType": "gp3"}
+             }]
 
   hello:
     name: Do the job on the runner
