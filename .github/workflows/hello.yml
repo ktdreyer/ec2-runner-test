@@ -29,7 +29,6 @@ jobs:
           ec2-instance-type: t3.nano
           subnet-id: subnet-024298cefa3bedd61
           security-group-id: sg-06300447c4a5fbef3
-          ec2-volume-size: "8"
           aws-resource-tags: >
             [
               {"Key": "Name", "Value": "kdreyer-test-ec2-github-runner"},
