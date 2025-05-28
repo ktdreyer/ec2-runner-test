@@ -26,7 +26,7 @@ jobs:
           mode: start
           github-token: ${{ secrets.GH_PERSONAL_ACCESS_TOKEN }}
           ec2-image-id: ami-0ac695c51e366938c
-          ec2-instance-type: t3.nano
+          ec2-instance-type: t3.small
           subnet-id: subnet-024298cefa3bedd61
           security-group-id: sg-06300447c4a5fbef3
           aws-resource-tags: >
@@ -46,6 +46,21 @@ jobs:
           uname -a
           cat /etc/os-release
           df -h
+          sudo dnf -y install fio fio-engine-libaio
+          sudo mkdir /var/test
+          # test throughput (sequential writes):
+          sudo fio \
+            --name=sequential_write \
+            --directory=/var/test \
+            --rw=write \
+            --bs=1M \
+            --size=10G \
+            --numjobs=1 \
+            --ioengine=libaio \
+            --iodepth=64 \
+            --direct=1 \
+            --group_reporting \
+            --runtime=60
 
   stop-runner:
     name: Stop self-hosted EC2 runner
