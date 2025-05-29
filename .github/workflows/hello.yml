@@ -21,7 +21,7 @@ jobs:
           aws-region: us-east-2
       - name: Start EC2 runner
         id: start-ec2-runner
-        uses: ktdreyer/ec2-github-runner@optional-volume-settings
+        uses: machulav/ec2-github-runner@v2.4.1
         with:
           mode: start
           github-token: ${{ secrets.GH_PERSONAL_ACCESS_TOKEN }}
@@ -78,7 +78,7 @@ jobs:
           aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
           aws-region: us-east-2
       - name: Stop EC2 runner
-        uses: ktdreyer/ec2-github-runner@optional-volume-settings
+        uses: machulav/ec2-github-runner@v2.4.1
         with:
           mode: stop
           github-token: ${{ secrets.GH_PERSONAL_ACCESS_TOKEN }}
