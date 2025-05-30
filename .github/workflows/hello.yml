@@ -40,27 +40,21 @@ jobs:
     needs: start-runner
     runs-on: ${{ needs.start-runner.outputs.label }}
     steps:
-      - name: Hello World
+      - name: run the test
         run: |
-          echo 'Hello World!'
           uname -a
           cat /etc/os-release
           df -h --print-type
-          sudo dnf -y install fio fio-engine-libaio
-          sudo mkdir /var/test
-          # test throughput (sequential writes):
-          sudo fio \
-            --name=sequential_write \
-            --directory=/var/test \
-            --rw=write \
-            --bs=1M \
-            --size=10G \
-            --numjobs=1 \
-            --ioengine=libaio \
-            --iodepth=64 \
-            --direct=1 \
-            --group_reporting \
-            --runtime=60
+          sudo dnf -y install gcc kernel-headers
+          git clone --depth 1 https://github.com/ktdreyer/fallocate-test
+          cd fallocate-test
+          git log HEAD -1 --no-decorate
+          gcc test_fallocate_loop.c -o test_fallocate_loop
+          ./test_fallocate_loop my_massive_file 2049 || :
+      - name: check disk space with df
+        run: |
+          df -h
+          ls -lh
 
   stop-runner:
     name: Stop self-hosted EC2 runner
