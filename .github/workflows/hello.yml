@@ -45,7 +45,7 @@ jobs:
           echo 'Hello World!'
           uname -a
           cat /etc/os-release
-          df -h
+          df -h --print-type
           sudo dnf -y install fio fio-engine-libaio
           sudo mkdir /var/test
           # test throughput (sequential writes):
