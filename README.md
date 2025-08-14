@@ -11,15 +11,14 @@ GH_PERSONAL_ACCESS_TOKEN
 
 # GH_PERSONAL_ACCESS_TOKEN
 
-Create a [new GitHub personal access token](https://github.com/settings/tokens). The upstream repository says to use the `repo` scope, and this is probably referring to GitHub's "classic" tokens.
+Create a [new GitHub personal access token](https://github.com/settings/tokens). The upstream repository says to use the `repo` scope, and this refers to GitHub's "classic" tokens.
 
-I would like to try using GitHub's newer fine-grained tokens, so that I can use modern security options, restrict this token to this single repo, and possibly even update the upstream documentation to use this.
+I'm testing using GitHub's newer fine-grained tokens, so that I can use modern security options, restrict this token to this single repo, and possibly even update the upstream documentation to use this...
 
-For the new token I created, I've selected the following options, guessing at what I will need:
+With experimentation and reading [this in-progress PR](https://github.com/machulav/ec2-github-runner/pull/239), I've found that the token needs:
 
-* Actions: read/write
 * Administration: read/write
 * Metadata: read-only
-* Commit statuses: read/write
 * Contents: read-only
-* Pull Requests: read-only
+
+Once that PR is merged, we won't need the full `Administration` privilege when we use the GH Action within organizations.
