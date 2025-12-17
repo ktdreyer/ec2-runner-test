@@ -1,25 +1,23 @@
 #!/usr/bin/env python3
-import sys
 import os
-import configparser
 import subprocess
-
-CRED_FILE = os.path.expanduser("~/.aws/credentials")
 
 
 def main():
-    profile = sys.argv[1] if len(sys.argv) > 1 else "saml"
+    # Read AWS credentials from environment variables
+    aws_access_key_id = os.environ.get("AWS_ACCESS_KEY_ID")
+    aws_secret_access_key = os.environ.get("AWS_SECRET_ACCESS_KEY")
+    aws_session_token = os.environ.get("AWS_SESSION_TOKEN")
 
-    config = configparser.RawConfigParser()
-    config.read(CRED_FILE)
+    # Verify all required credentials are present
+    if not aws_access_key_id:
+        raise SystemExit("Error: AWS_ACCESS_KEY_ID environment variable is not set")
 
-    if profile not in config:
-        print(f"Profile '{profile}' not found in {CRED_FILE}")
-        sys.exit(1)
+    if not aws_secret_access_key:
+        raise SystemExit("Error: AWS_SECRET_ACCESS_KEY environment variable is not set")
 
-    aws_access_key_id = config[profile]["aws_access_key_id"]
-    aws_secret_access_key = config[profile]["aws_secret_access_key"]
-    aws_session_token = config[profile]["aws_session_token"]
+    if not aws_session_token:
+        raise SystemExit("Error: AWS_SESSION_TOKEN environment variable is not set")
 
     subprocess.run(
         ["gh", "secret", "set", "AWS_ACCESS_KEY_ID"],
@@ -37,7 +35,7 @@ def main():
         check=True,
     )
 
-    print(f"Secrets set for profile '{profile}'.")
+    print("Secrets set successfully from environment variables.")
 
 
 if __name__ == "__main__":
